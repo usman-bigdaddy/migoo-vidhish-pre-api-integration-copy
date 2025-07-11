@@ -1,0 +1,10 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[[redirects]]
+  from = "/api/*"
+  to = "http://my-flask-api-env.eba-stpnimm3.eu-north-1.elasticbeanstalk.com/api/:splat"
+        
+  status = 200
+  force = true

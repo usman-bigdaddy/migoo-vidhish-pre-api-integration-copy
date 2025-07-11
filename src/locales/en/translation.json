@@ -1,0 +1,532 @@
+{
+  "help": {
+    "faq_title": "FAQ’s",
+    "faq_subtitle": "Common questions and troubleshooting tips",
+    "contact_title": "Contact Form",
+    "contact_subtitle": "Submit your queries"
+  },
+  "faq": {
+    "questions": [
+      {
+        "question": "1. What is Migoo?",
+        "answer": "Migoo is an innovative English learning platform powered by AI and up-to-date psychometric data. The system is designed to help students excel in the English section of psychometric exams."
+      },
+      {
+        "question": "2. What makes Migoo different from other English learning platforms?",
+        "answer": "Migoo uniquely combines AI technology with psychometric insights. The system personalizes your learning journey to help you succeed in the English section of the Psychometric/AMIR test."
+      },
+      {
+        "question": "3. How does Migoo work?",
+        "answer": "Migoo offers personalized learning experiences, including vocabulary building and reading comprehension practice. The system analyzes the student's strengths and weaknesses to maximize learning."
+      },
+      {
+        "question": "4. Is Migoo suitable for all levels of English proficiency?",
+        "answer": "Yes, Migoo is designed for students of all skill levels. Whether you're a beginner or looking to enhance your skills, Migoo is the tool for you."
+      },
+      {
+        "question": "5. What content does Migoo provide?",
+        "answer": "Migoo offers vocabulary exercises, reading comprehension passages, sentence completion, and paraphrasing. The content is AI-generated and based on psychometric data."
+      },
+      {
+        "question": "6. Can I track my progress with Migoo?",
+        "answer": "Yes! Migoo provides a user-friendly progress tracker and personalized feedback to help you monitor your learning and improve."
+      }
+    ]
+  },
+ "contactForm": {
+  "nameLabel": "Name",
+  "subjectLabel": "Subject",
+  "messageLabel": "Message",
+  "submitButton": "Submit",
+  "nameError": "Name is required",
+  "subjectError": "Subject is required",
+  "messageError": "Message is required"
+}
+,
+  "footer":{
+  "rights": "All rights reserved",
+  "privacyPolicy": "Privacy Policy",
+  "terms": "Terms & Conditions"
+},
+ "proficiency": {
+    "title": "Your Proficiency Level",
+    "description": "Lorem ipsum dolor sit amet, consectetur",
+    "level": "Intermediate"
+  },
+   "lastTestScores": {
+    "title": "Last Test Scores",
+    "description": "Lorem ipsum dolor sit amet, consectetur",
+    "scores": {
+      "reading": "Reading",
+      "sentenceCompletion": "Sentence Completion",
+      "resentencing": "Resentencing",
+      "hearingComprehension": "Hearing Comprehension"
+    }
+  },
+   "activity": {
+    "title": "Activity",
+    "totalTest": "Total Test",
+    "complete": "Complete",
+    "incomplete": "Incomplete",
+    "thisWeek": "This Week"
+  },
+   "ready": {
+    "message": "Ready to Take Your English Skills to the Next Level?",
+    "button": "Start English Test"
+  },
+  "tests": {
+    "title": "Challenges",
+    "no": "No.",
+    "description": "Description",
+    "studyPoints": "Study Points",
+    "status": "Status",
+    "complete": "Complete",
+    "incomplete": "Incomplete",
+    "descriptions": {
+      "readingComprehension": "Reading Comprehension",
+      "sentenceCompletions": "Sentence Completions",
+      "restatements": "Restatements",
+      "listening": "Listening"
+    }
+  },
+ "settings": {
+    "personalInformation": {
+      "title": "Personal Information",
+      "subtitle": "Manage Your Personal Information",
+      "name": "Name",
+    "namePlaceholder": "Enter name",
+    "email": "Email",
+    "emailPlaceholder": "Enter email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "changePassword": "Change Password"
+    },
+    "subscriptionPlan": {
+      "title": "Subscription Plan",
+      "subtitle": "View, Switch, or Cancel Your Plan",
+      "basic":"Basic",
+      "currentPlan":"Current Plan",
+      "expert":"Expert",
+      "unlimited":"Unlimited"
+    },
+    "emailNotifications": {
+      "title": "Email Notifications",
+      "subtitle": "Manage Your Promotional and Progress Updates",
+      "promotional":"Promotional Emails",
+      "studyProgress":"Studying Progress Emails",
+      "newsUpdate":"News Update"
+    },
+    "displaySettings": {
+      "title": "Display Settings",
+      "subtitle": "Choose Between Light and Dark Modes",
+      "light":"Light",
+      "dark":"Dark"
+    },
+    "languagePreferences": {
+      "title": "Language Preferences",
+      "subtitle": "Select Your Preferred App Language",
+      "label":"Language"
+    },
+    "savePreferences": {
+      "heading": "Save Preferences",
+      "subheading": "Your Custom Settings Safe",
+      "button": "Save Change"
+    }
+  },
+  "weeklyChallenge": {
+    "title": "Weekly Challenge",
+    "subtitle": "Complete the weekly challenge to get",
+    "reward": "500 SP",
+    "tasks": {
+      "readingTest": "Complete reading test",
+      "wordTest": "Complete word test",
+      "listeningTest": "Listening test"
+    }
+  },
+  "titles":{
+    "challenges": "Weekly Challenge",
+    "dashboard":"Dashboard",
+    "upgrade":"Upgrade"
+
+  },
+   "studentPoints": {
+    "title": "Student Points",
+    "yourPoints": "Your Points",
+    "showRank": "Show Rank",
+    "sp": "{{value}} SP",
+    "levels": [
+      "Alphabet Adventurer",
+      "Kindergarten Explorer",
+      "Word Wanderer",
+      "Grammer Gardener",
+      "Sentence Sprinter",
+      "Vocabulary Voyager",
+      "Phrase Finder",
+      "Listening Learner",
+      "Language Dreamer",
+      "Speaking Star",
+      "Punctuation Pilot",
+      "Conjugation Captain",
+      "Accent Acrobat",
+      "Dialogue Dancer",
+      "Reading Racer",
+      "Quiz Conqueror",
+      "Story Spinner",
+      "Word Wizard",
+      "Grammer Gladiator",
+      "Culture Chaser",
+      "Spelling Sorcerer",
+      "Phrase Philosopher",
+      "Listening Legend",
+      "Sentence Sculptor",
+      "Language Detective",
+      "Grammar Guru",
+      "Accent Artist",
+      "Fluency Flyer",
+      "Verb Voyager",
+      "Speaking Scholar",
+      "Syntax Seeker",
+      "Context Climber",
+      "Comprehension Champion",
+      "Paragraph Pioneer",
+      "Conversation Conductor",
+      "Writing Warrior",
+      "Dialogue Doctor",
+      "Translation Trailblazer",
+      "Syntax Sage",
+      "Fluency Fighter",
+      "Cultural Cruisader",
+      "Prose Professor",
+      "Discussion Dynamo",
+      "Articulation Alchemist",
+      "Language Luminary",
+      "Wordplay Warrior",
+      "Communication Commander",
+      "Master of Meaning",
+      "Eloquent Explorer",
+      "The Professor",
+      "Language Legend"
+    ]
+  },
+   "leaderboard": {
+    "yourRank": "Your Rank",
+    "yourCompetitions": "Your Competitions"
+  },
+  "contact": {
+    "submitForm": "Submit Form",
+    "messageSent": {
+      "title": "Message sent successfully",
+      "body": "Thank you for reaching out to us. We’ve received your message and will get back to you shortly.",
+      "goHome": "Go to home"
+    }
+  },
+  "cancelPlan": {
+    "openButton": "Cancel Plan",
+    "step1": {
+      "title": "Are you sure you want to cancel your plan?",
+      "line1": "If you cancel all your data will be erased and you will have to start from zero in case you come back.",
+      "line2": "You’ll retain access until your billing period ends.",
+      "keep": "I Change My Mind",
+      "cancel": "Cancel My Plan"
+    },
+    "step2": {
+      "title": "Help us improve",
+      "subtitle": "We’d love to understand why you're canceling:",
+      "reasons": {
+        "not_using": "I don’t use it enough",
+        "issues": "I had technical issues",
+        "alternative": "I found a better alternative",
+        "temporary": "I only needed it temporarily",
+        "expensive": "It’s too expensive",
+        "other": "Other"
+      },
+      "otherLabel": "Please specify"
+    },
+    "step3": {
+      "title": "Confirm Cancellation",
+      "line1": "Your subscription will end on {{date}}. You'll retain access until then.",
+      "checkbox": "I understand I will lose access to Migoo’s features after this date.",
+      "confirm": "Confirm Cancellation"
+    },
+    "step4": {
+      "title": "Your subscription has been canceled.",
+      "line1": "You still have access to all the features you subscribed for until {{date}}."
+    }
+  },
+  "back": "Back",
+  "continue": "Continue",
+  "goBack": "Go Back",
+   "login": {
+    "pageTitle": "Login",
+    "newTo": "New to Migoo?",
+    "createAccount": "Create an account",
+     "loginButton": "Login",
+    "welcomeBack": "Welcome Back!",
+    "noAccount": "Don't have an account?",
+    "signup": "Signup",
+    "email": "Email",
+    "emailPlaceholder": "Enter email",
+    "password": "Password",
+    "pwdPlaceholder": "Enter password",
+    "remember": "Remember me",
+    "forgot": "Forgot Password?",
+    "loginBtn": "Login",
+    "or": "or continue with",
+    "google": "Google",
+    "errors": {
+      "emailFormat": "Invalid email format",
+      "emailRequired": "Email is required",
+      "pwdMin": "Password must be at least 6 characters",
+      "pwdRequired": "Password is required"
+    }
+  },
+  "forgot": {
+    "title": "Forgot Password",
+    "instructions": "Enter your email. We will email instructions on how to reset your password.",
+    "back": "Back to",
+    "loginLink": "Login",
+    "email":"Email",
+    "enterEmail":"Enter Email",
+    "invalidEmail":"Invalid email address",
+    "requiredEmail":"Email is required",
+    "submit":"Submit"
+  },
+   "resetPassword": {
+    "title": "Reset Password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "save": "Save",
+    "validation": {
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 8 characters",
+      "passwordsMatch": "Passwords must match",
+      "confirmPasswordRequired": "Confirm password is required"
+    }
+  },
+   "confirmEmail": {
+    "pageTitle": "Confirm Email",
+    "pageDescription": "This is the confirm email page",
+    "title": "Confirm Email",
+    "instructions": "Enter the 4‑digit code we sent to your email",
+    "resend": "Resend code",
+    "verify":"Verify"
+  },
+   "register": {
+    "pageTitle": "Register",
+    "pageDescription": "Register page",
+    "alreadyHaveAccount": "Already have an Account?",
+    "signIn": "Sign In",
+    "title": "Create an account",
+    "name": "Name",
+    "namePlaceholder": "Enter name",
+    "lastName": "Last Name",
+    "lastNamePlaceHolder": "Enter lastname",
+    "email": "Email",
+    "emailPlaceholder": "Enter email",
+    "country": "Country",
+    "countryPlaceholder": "Select country",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "termsPrefix": "You agree to Migoo's",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "and": "and",
+    "createAccount": "Create account",
+    "orContinue": "or continue with",
+    "google": "Google",
+    "validation": {
+      "nameRequired": "Name is required",
+      "invalidEmail": "Invalid email",
+      "emailRequired": "Email is required",
+      "countryRequired": "Country is required",
+      "passwordMin": "Password must be at least 6 characters",
+      "passwordRequired": "Password is required",
+      "confirmPasswordRequired": "Confirm Password is required",
+      "passwordsMatch": "Passwords must match",
+      "terms": "You must accept the terms and conditions"
+    }
+  },
+  "menu": {
+    "homeHeader": "Home",
+    "dashboard": "Dashboard",
+    "reading": "Reading",
+    "sentenceCompletion": "Sentence Completion",
+    "restatements": "Restatements",
+    "listeningTest": "Listening Test",
+    "wordBank": "Word Bank",
+    "englishTest": "English Test",
+    "leaderboard": "Leaderboard",
+    "achievements": "Achievements",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Logout"
+  },
+  "upgrade": {
+    "steps": ["Choose Plan", "Success"],
+    "choosePlanTitle": "Choose the plan that suits you best!",
+    "basicPlan": {
+      "name": "Basic Plan",
+      "monthlyPrice": "$9.99/mo",
+      "tooltip": "Perfect for small teams and startups",
+      "features": [
+  "15 quizzes per week",
+  "Access to core vocabulary builder (1,000+ words)",
+  "Basic grammar exercises",
+  "Basic analytics & progress tracking",
+  "Weekly progress reports & streak counters",
+  "Email support (response within 48 hours)",
+  "Mobile app access"
+]
+
+    },
+    "premiumPlan": {
+      "name": "Expert Plan",
+      "monthlyPrice": "$19.99/mo",
+      "tooltip": "Best for growing businesses",
+     "features": [
+  "Unlimited quizzes & exercises",
+  "Advanced vocabulary builder (5,000+ words)",
+  "Custom study plans & AI-generated schedules",
+  "Grammar mastery modules",
+  "Advanced analytics & exportable reports",
+  "Speaking practice with AI-powered feedback",
+  "Priority support (24-hour response)",
+  "Offline mode for learning anywhere",
+  "Achievement badges & competitive leaderboards",
+  "Integration with external tools",
+  "Early access to new features"
+]
+
+    },
+    "selectPlan": "Select Plan",
+    "selected": "Selected",
+    "upgradeTitle": "Upgrade to {{planName}}",
+    "planLabel": "Plan",
+    "billingLabel": "Billing",
+    "startLabel": "Start",
+    "renewalLabel": "Renewal",
+    "proRatedAmount": "Pro-rated amount",
+    "nextBillingDate": "Next billing date",
+    "confirmUpgrade": "Confirm & Upgrade",
+    "goBack": "Go Back",
+    "successTitle": "Your plan has been upgraded!",
+    "successMessage": "You are now on the {{planName}} plan.",
+    "successBilling": "Billing starts on {{date}}",
+    "enjoyMessage": "Enjoy new features right away!",
+    "startLearning": "Start learning!",
+    "upgradeSuccessSnackbar": "Plan upgraded successfully!"
+  },
+   "weeklyChallengeModal": {
+    "title": "Weekly Challenge",
+    "button": "Weekly Challenge",
+    "description": "Complete 10 Reading Comprehension exercises in 7 days and earn bonus points",
+    "subtitle": "Take on this week’s challenge and earn extra Student points",
+    "startChallenge":"Start Challenge"
+  },
+   "challengeCompleted": {
+    "button": "Challenge completed",
+    "title": "Weekly Challenge",
+    "heading": "Challenge Completed!",
+    "description": "You just completed a challenge! Keep it up!"
+  },
+  "infoButton":{
+  "dialogTitle": "Migoo AI",
+  "intro1": "Migoo is an innovative AI-powered English learning system designed for students preparing for the Psychometric or Amirnet exams.",
+  "intro2": "The system is built to optimize your study time! The more you practice, the better it learns your strengths and weaknesses — and it will tailor personalized practice materials just for you!",
+  "howToPractice": "How to practice?",
+  "practiceIntro": "In the system, you can practice the different English sections of the exam:",
+  "sections": ["Reading Comprehension", "Sentence Completion", "Restatements", "Listening Comprehension"],
+  "menuHint": "You can find the different practice sections in the selection menu on the left.",
+  "vocabulary": "Vocabulary",
+  "vocabExplain1": "In the Vocabulary page, you’ll see and learn words that the system identified as ones you don’t know well enough.",
+  "vocabExplain2": "The system will make sure to include these words in your future practice sessions!",
+  "trackProgress": "Track your progress",
+  "progressHint": "You can track your progress on the Dashboard and Achievements pages!",
+  "callToAction": "So go ahead — start practicing!"
+},
+"reading":{
+  "heading":"Reading Comprehension",
+  "subHeading":"Enhance your reading comprehension skills with curated passages and exercises."
+},
+"restatements":{
+    "heading":"Restatements",
+    "subHeading":"Effortlessly expand your English vocabulary through interactive exercises and a rich Word Bank"
+},
+"sentenceCompletion":{
+    "heading":"Sentence Completions",
+    "subHeading":"Effortlessly expand your English vocabulary through interactive exercises and a rich Word Bank"
+},
+"listening":{
+    "heading":"Listening test",
+    "subHeading":"Enhance Your Listening Skills Through Focused Practice."
+},
+"testtitle":{
+  "stopTest":"Stop test",
+  "newTest":"New test",
+  "yourTestWillStartIn": "Your test will start in",
+  "goBack":"Go Back",
+  "areYouSure":"Are you sure you want to stop the test?",
+  "resumeTest":"Resume Test",
+  "timeLeft":"Time Left",
+  "timer":"Timer"
+},
+ "wordBank": {
+    "wordGame": "Word Game",
+    "wordGameSubtitle": "Master English Comprehension Through Carefully Designed Activities",
+    "goBack": "Go Back",
+    "testStartsIn": "Your test will start in",
+    "stopConfirm": "Are you sure you want to stop the test?",
+    "resume": "Resume Test",
+    "stop": "Stop Test",
+    "wordBank": "Word Bank",
+    "wordBankSubtitle": "Access a comprehensive resource to enrich your language proficiency with a treasure trove of words and phrases"
+  },
+  "welcome": {
+    "title": "Welcome to MIGOO",
+    "testInfo1": "We offer a test to evaluate your English fluency level.",
+    "testInfo2": "Based on the test results, the system will suggest a suitable difficulty level.",
+    "takeTest": "Take Test",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "goHome": "Go to Home"
+  },
+    "thanks": {
+    "title": "Thanks for attending the test",
+    "fluencyText": "Your fluency level is",
+    "goHome": "Go to Home",
+    "retake": "Retake Test",
+    "intermediate":"Intermediate"
+  },
+    "topRank": {
+    "title": "Top Rank",
+    "refreshNote": "Rank list refreshes every 5 minutes",
+    "studentPoints":"Student points",
+    "filter": {
+      "allTime": "All‑Time Leader",
+      "challenge": "Challenge Master",
+      "hearing": "Hearing",
+      "reading": "Reading",
+      "restatement": "Restatements",
+      "wordCompletion": "Word Completion"
+    }
+  },
+    "testResults": {
+    "performance": "Your Performance",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "pointsGained": "Total student points gained",
+    "review": "Review test",
+    "startNew": "Start New"
+  },
+  "profileDropdown":{
+    "myDashboard":"My Dashboard",
+    "settings":"Settings",
+    "logout":"Logout"
+  }
+
+}

@@ -1,0 +1,2 @@
+/api/*   http://my-flask-api-env.eba-stpnimm3.eu-north-1.elasticbeanstalk.com/api/:splat   200
+/*       /index.html   200
