@@ -42,6 +42,7 @@ const PersonalInformation = ({ onFormChange, profile }) => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture2, setProfilePicture2] = useState(null);
   const [formData, setFormData] = useState({
     first_name: profile?.first_name || "",
     last_name: profile?.last_name || "",
@@ -56,21 +57,25 @@ const PersonalInformation = ({ onFormChange, profile }) => {
     const reader = new FileReader();
     reader.onloadend = () => setProfilePicture(reader.result);
     reader.readAsDataURL(file);
+    setProfilePicture2(file);
   };
 
   const handleClick = async () => {
-    if (!profilePicture) return;
+    if (!profilePicture2) return;
 
     const formData = new FormData();
-    formData.append("avatar", profilePicture);
+    formData.append("avatar", profilePicture2);
     try {
       const response = await api.post("/api/student/avatar", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      console.log("Upload success:", response.data);
+      if (response.data.success) {
+        alert("Profile picture updated successfully.");
+      } else {
+        alert("Failed to update profile picture.");
+      }
     } catch (error) {
       console.error("Upload failed:", error);
     }
@@ -241,11 +246,13 @@ const PersonalInformation = ({ onFormChange, profile }) => {
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-        <Avatar
-          alt="Profile"
-          src={profilePicture || profile?.avatar_url || UserAvatar}
-          sx={{ width: 56, height: 56, mr: 1 }}
-        />
+        {profile && (
+          <Avatar
+            alt="Profile"
+            src={profilePicture || profile.avatar_url || UserAvatar}
+            sx={{ width: 56, height: 56, mr: 1 }}
+          />
+        )}
         <label htmlFor="profile-picture-input">
           <FileInput
             accept="image/*"

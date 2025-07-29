@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import TestTitle from "../../components/testtitle/TestTitle";
 import {
   Typography,
@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogActions,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import MCQ from "../../components/mcq/MCQ";
 import Chart from "react-apexcharts";
@@ -15,94 +16,93 @@ import TestResults from "../../components/modals/testresults/TestResults";
 import ThanksForAttendingPopup from "../../components/modals/thanksforattending/ThanksForAttending";
 import { useTranslation } from "react-i18next";
 import { useTimer } from "../../context/TimerContext";
+import api from "../../redux/api/axiosInstance";
 
 const Restatements = ({ showSubmitButton }) => {
   const [openPopup, setOpenPopup] = useState(false);
-  const questions_data = [
-    {
-      question:
-        "A person who is deficient in a particular nutrient may crave certain foods.",
-      options: [
-        {
-          text: "A strong desire for certain foods can be caused by the lack of a specific nutrient.",
-          isCorrect: true,
-          explanation: "This is an explanation of the answer in a tooltip.",
-        },
-        {
-          text: "Consuming an adequate amount of nutrients can promote good health.",
-          isCorrect: false,
-        },
-        {
-          text: "Cravings can lead to the excessive consumption of food.",
-          isCorrect: false,
-        },
-        {
-          text: "People tend to consume foods that have little nutritional value.",
-          isCorrect: false,
-        },
-      ],
-    },
-    {
-      question: "Which sentence is grammatically correct?",
-      options: [
-        { text: "She don't like ice cream.", isCorrect: false },
-        { text: "She doesn't likes ice cream.", isCorrect: false },
-        {
-          text: "She doesn't like ice cream.",
-          isCorrect: true,
-          explanation: "This is an explanation of the answer in a tooltip.",
-        },
-        { text: "She not like ice cream.", isCorrect: false },
-      ],
-    },
-    {
-      question:
-        "Choose the correct form of the verb: 'They ___ to the party last night.'",
-      options: [
-        { text: "go", isCorrect: false },
-        { text: "gone", isCorrect: false },
-        {
-          text: "went",
-          isCorrect: true,
-          explanation: "This is an explanation of the answer in a tooltip.",
-        },
-        { text: "going", isCorrect: false },
-      ],
-    },
-    {
-      question: "Fill in the blank: 'If I ___ you, I would apologize.'",
-      options: [
-        { text: "was", isCorrect: false },
-        { text: "am", isCorrect: false },
-        {
-          text: "were",
-          isCorrect: true,
-          explanation: "This is an explanation of the answer in a tooltip.",
-        },
-        { text: "be", isCorrect: false },
-      ],
-    },
-    {
-      question: "Choose the correct sentence:",
-      options: [
-        { text: "Its a beautiful day.", isCorrect: false },
-        {
-          text: "It’s a beautiful day.",
-          isCorrect: true,
-          explanation: "This is an explanation of the answer in a tooltip.",
-        },
-        { text: "Its’ a beautiful day.", isCorrect: false },
-        { text: "Its’s a beautiful day.", isCorrect: false },
-      ],
-    },
-  ];
+  const [questions_data, setQuestionsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const { stopTest } = useTimer(); // ✅ Import stopTest from TimerContext
-  const [answers, setAnswers] = useState(
-    Array(questions_data.length).fill(null)
-  );
+  const { stopTest, testIsGoingOn, isTimerRunning } = useTimer();
+  const [answers, setAnswers] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [openResultModal, setOpenResultModal] = useState(false);
+
+  // Memoize the display state to prevent unnecessary re-renders
+  const shouldShowQuestions = useMemo(() => {
+    return testIsGoingOn && isTimerRunning;
+  }, [testIsGoingOn, isTimerRunning]);
+
+  const shouldShowStartMessage = useMemo(() => {
+    return !testIsGoingOn;
+  }, [testIsGoingOn]);
+
+  const shouldShowPauseMessage = useMemo(() => {
+    return testIsGoingOn && !isTimerRunning;
+  }, [testIsGoingOn, isTimerRunning]);
+
+  // Transform API data to match the expected format
+  const transformApiData = (apiData) => {
+    return apiData.restatements.map((item) => ({
+      question: item.question,
+      options: [
+        {
+          text: item.option_1,
+          isCorrect: item.correct === "1",
+          ...(item.correct === "1" && {
+            explanation: "This is an explanation of the answer in a tooltip.",
+          }),
+        },
+        {
+          text: item.option_2,
+          isCorrect: item.correct === "2",
+          ...(item.correct === "2" && {
+            explanation: "This is an explanation of the answer in a tooltip.",
+          }),
+        },
+        {
+          text: item.option_3,
+          isCorrect: item.correct === "3",
+          ...(item.correct === "3" && {
+            explanation: "This is an explanation of the answer in a tooltip.",
+          }),
+        },
+        {
+          text: item.option_4,
+          isCorrect: item.correct === "4",
+          ...(item.correct === "4" && {
+            explanation: "This is an explanation of the answer in a tooltip.",
+          }),
+        },
+      ],
+    }));
+  };
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get("/api/restatements"); // Update this endpoint
+
+        if (response.data.success) {
+          const transformedData = transformApiData(response.data);
+          setQuestionsData(transformedData);
+          setAnswers(Array(transformedData.length).fill(null));
+        } else {
+          setError("Failed to fetch questions");
+        }
+      } catch (err) {
+        setError("Error fetching questions: " + err.message);
+        console.error("Error fetching questions:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
 
   const handleOptionChange = (questionIndex, selectedOption) => {
     const newAnswers = [...answers];
@@ -141,6 +141,37 @@ const Restatements = ({ showSubmitButton }) => {
 
   const { t } = useTranslation();
 
+  // Loading state
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="400px"
+      >
+        <CircularProgress />
+        <Typography ml={2}>Loading questions...</Typography>
+      </Box>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="400px"
+      >
+        <Typography color="error" variant="h6">
+          {error}
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <>
       <TestTitle
@@ -149,39 +180,69 @@ const Restatements = ({ showSubmitButton }) => {
       />
 
       <Box dir="ltr">
-        <Typography mt={4} mb={3} variant="body1">
-          This part consists of several sentences, each followed by four
-          possible ways of restating the main idea of that sentence in different
-          words. For each question, choose the one restatement
-          <Typography variant="h6" mt={1}>
-            which best expresses the meaning of the original sentence.
-          </Typography>
-        </Typography>
+        {shouldShowQuestions && (
+          <>
+            <Typography mt={4} mb={3} variant="body1">
+              This part consists of several sentences, each followed by four
+              possible ways of restating the main idea of that sentence in
+              different words. For each question, choose the one restatement
+              <Typography variant="h6" mt={1}>
+                which best expresses the meaning of the original sentence.
+              </Typography>
+            </Typography>
 
-        <Typography variant="h2" style={{ marginBottom: "30px" }}>
-          Questions 1 to 5
-        </Typography>
+            <Typography variant="h2" style={{ marginBottom: "30px" }}>
+              Questions 1 to {questions_data.length}
+            </Typography>
 
-        {questions_data.map((item, index) => (
-          <MCQ
-            key={index}
-            question={item.question}
-            options={item.options}
-            index={index}
-            selectedOption={answers[index]}
-            handleOptionChange={handleOptionChange}
-            showResult={showResult}
-          />
-        ))}
-        {showSubmitButton && (
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ m: 1 }}
-            onClick={calculateResults}
+            {questions_data.map((item, index) => (
+              <MCQ
+                key={index}
+                question={item.question}
+                options={item.options}
+                index={index}
+                selectedOption={answers[index]}
+                handleOptionChange={handleOptionChange}
+                showResult={showResult}
+              />
+            ))}
+            {showSubmitButton && (
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ m: 1 }}
+                onClick={calculateResults}
+              >
+                Submit Test
+              </Button>
+            )}
+          </>
+        )}
+
+        {shouldShowStartMessage && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="300px"
           >
-            Submit Test
-          </Button>
+            <Typography variant="h5" color="text.secondary">
+              Click "New Test" to start the test
+            </Typography>
+          </Box>
+        )}
+
+        {shouldShowPauseMessage && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="300px"
+          >
+            <Typography variant="h5" color="text.secondary">
+              Test is paused. Click "Resume Test" to continue
+            </Typography>
+          </Box>
         )}
       </Box>
 

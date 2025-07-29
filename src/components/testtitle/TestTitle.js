@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle, Box
-} from '@mui/material';
-import { Grid2 } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { useTimer } from '../../context/TimerContext';
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Box,
+} from "@mui/material";
+import { Grid2 } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useTimer } from "../../context/TimerContext";
 
 const TestTitle = ({ title, subtitle }) => {
   const { t } = useTranslation();
@@ -32,7 +38,7 @@ const TestTitle = ({ title, subtitle }) => {
 
   const handleNewTestButtonClick = () => {
     if (testIsGoingOn) {
-      pauseTimer();            // Pause timer when opening stop modal
+      pauseTimer(); // Pause timer when opening stop modal
       setOpenStopModal(true);
     } else {
       setOpenModal(true);
@@ -47,19 +53,19 @@ const TestTitle = ({ title, subtitle }) => {
 
   const handleCancelStopTest = () => {
     setOpenStopModal(false);
-    resumeTimer();             // Resume timer if stop modal is canceled
+    resumeTimer(); // Resume timer if stop modal is canceled
   };
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   };
 
   // Show "Timer" if test not started or stopped, otherwise show formatted time
   const getTimerDisplay = () => {
     if (!testIsGoingOn) {
-      return t('testtitle.timer');  // Show "Timer" text (localized)
+      return t("testtitle.timer"); // Show "Timer" text (localized)
     }
     return formatTime(timeLeft);
   };
@@ -69,7 +75,9 @@ const TestTitle = ({ title, subtitle }) => {
       <Grid2 container spacing={2} mt={5} justifyContent="space-between">
         <div>
           <Typography variant="h4">{title}</Typography>
-          <Typography variant="h6" mt={2}>{subtitle}</Typography>
+          <Typography variant="h6" mt={2}>
+            {subtitle}
+          </Typography>
         </div>
         <div>
           <Button variant="outlined" sx={{ m: 2 }}>
@@ -77,23 +85,31 @@ const TestTitle = ({ title, subtitle }) => {
           </Button>
           <Button
             variant="contained"
-            color={testIsGoingOn ? 'error' : 'primary'}
+            color={testIsGoingOn ? "error" : "primary"}
             onClick={handleNewTestButtonClick}
           >
-            {testIsGoingOn ? t('testtitle.stopTest') : t('testtitle.newTest')}
+            {testIsGoingOn ? t("testtitle.stopTest") : t("testtitle.newTest")}
           </Button>
         </div>
       </Grid2>
 
-      <hr style={{ border: '1px solid #DEDEDF' }} />
+      <hr style={{ border: "1px solid #DEDEDF" }} />
 
       <Dialog open={openModal}>
         <DialogContent>
           <Typography variant="h5" pl={3} pr={3}>
-            {t('testtitle.yourTestWillStartIn')}
+            {t("testtitle.yourTestWillStartIn")}
           </Typography>
-          <Box sx={{ color: '#157DF8', backgroundColor: '#157DF840', textAlign: 'center', borderRadius: '999px', m: 5 }}>
-            <Typography style={{ padding: '20px' }} variant="h2">
+          <Box
+            sx={{
+              color: "#157DF8",
+              backgroundColor: "#157DF840",
+              textAlign: "center",
+              borderRadius: "999px",
+              m: 5,
+            }}
+          >
+            <Typography style={{ padding: "20px" }} variant="h2">
               {countdown}
             </Typography>
           </Box>
@@ -101,13 +117,13 @@ const TestTitle = ({ title, subtitle }) => {
       </Dialog>
 
       <Dialog open={openStopModal} onClose={handleCancelStopTest}>
-        <DialogTitle>{t('testtitle.areYouSure')}</DialogTitle>
+        <DialogTitle>{t("testtitle.areYouSure")}</DialogTitle>
         <DialogActions>
           <Button onClick={handleCancelStopTest} color="primary">
-            {t('testtitle.resumeTest')}
+            {t("testtitle.resumeTest")}
           </Button>
           <Button onClick={handleStopTest} color="error">
-            {t('testtitle.stopTest')}
+            {t("testtitle.stopTest")}
           </Button>
         </DialogActions>
       </Dialog>
