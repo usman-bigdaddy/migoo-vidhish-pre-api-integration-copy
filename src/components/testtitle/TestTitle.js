@@ -12,7 +12,7 @@ import { Grid2 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useTimer } from "../../context/TimerContext";
 
-const TestTitle = ({ title, subtitle }) => {
+const TestTitle = ({ title, subtitle, standalone = true }) => {
   const { t } = useTranslation();
   const {
     countdown,
@@ -79,18 +79,20 @@ const TestTitle = ({ title, subtitle }) => {
             {subtitle}
           </Typography>
         </div>
-        <div>
-          <Button variant="outlined" sx={{ m: 2 }}>
-            {getTimerDisplay()}
-          </Button>
-          <Button
-            variant="contained"
-            color={testIsGoingOn ? "error" : "primary"}
-            onClick={handleNewTestButtonClick}
-          >
-            {testIsGoingOn ? t("testtitle.stopTest") : t("testtitle.newTest")}
-          </Button>
-        </div>
+        {standalone && (
+          <div>
+            <Button variant="outlined" sx={{ m: 2 }}>
+              {getTimerDisplay()}
+            </Button>
+            <Button
+              variant="contained"
+              color={testIsGoingOn ? "error" : "primary"}
+              onClick={handleNewTestButtonClick}
+            >
+              {testIsGoingOn ? t("testtitle.stopTest") : t("testtitle.newTest")}
+            </Button>
+          </div>
+        )}
       </Grid2>
 
       <hr style={{ border: "1px solid #DEDEDF" }} />

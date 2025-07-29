@@ -5,15 +5,15 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Reading from "./components/Reading";
-import SentenceCompletion from "./components/SentenceCompletion";
-import Restatements from "./components/Restatements";
-import ListeningTest from "./components/ListeningTest";
+// import Reading from "./components/Reading";
+// import SentenceCompletion from "./components/SentenceCompletion";
+// import Restatements from "./components/Restatements";
+// import ListeningTest from "./components/ListeningTest";
 
-// import Reading from "../../views/reading/Reading";
-// import SentenceCompletion from "../../views/sentencecompletion/SentenceCompletion";
-// import Restatements from "../../views/restatements/Restatements";
-// import ListeningTest from "../../views/listeningtest/ListeningTest";
+import Reading from "../../views/reading/Reading";
+import SentenceCompletion from "../../views/sentencecompletion/SentenceCompletion";
+import Restatements from "../../views/restatements/Restatements";
+import ListeningTest from "../../views/listeningtest/ListeningTest";
 
 import AverageScore from "../../components/modals/averagescore/AverageScore";
 import TestTitle from "./components/TestTitle";
@@ -131,15 +131,23 @@ export default function EnglishTest() {
             ) : (
               <>
                 <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
-                  {activeStep === 0 && <Reading showSubmitButton={false} />}
+                  {activeStep === 0 && (
+                    <Reading standalone={false} showSubmitButton={false} />
+                  )}
                   {activeStep === 1 && (
-                    <SentenceCompletion showSubmitButton={false} />
+                    <SentenceCompletion
+                      standalone={false}
+                      showSubmitButton={false}
+                    />
                   )}
                   {activeStep === 2 && (
-                    <ListeningTest showSubmitButton={false} />
+                    <ListeningTest
+                      standalone={false}
+                      showSubmitButton={false}
+                    />
                   )}
                   {activeStep === 3 && (
-                    <Restatements showSubmitButton={false} />
+                    <Restatements standalone={false} showSubmitButton={false} />
                   )}
                 </Typography>
 

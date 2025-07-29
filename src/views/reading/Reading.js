@@ -23,11 +23,11 @@ import {
 import { useTranslation } from "react-i18next";
 import { useTimer } from "../../context/TimerContext";
 
-const Reading = ({ showSubmitButton }) => {
+const Reading = ({ showSubmitButton, standalone = true }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const { t } = useTranslation();
   const { stopTest, testIsGoingOn, isTimerRunning, isCountdownComplete } =
-    useTimer(); // Added timer state properties
+    useTimer();
   const dispatch = useDispatch();
   const {
     currentText,
@@ -38,41 +38,36 @@ const Reading = ({ showSubmitButton }) => {
     errorSubmitText,
   } = useSelector((state) => state.text);
 
-  // Initialize answers state based on the number of questions
   const [answers, setAnswers] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [openResultModal, setOpenResultModal] = useState(false);
-  const [lastSubmissionId, setLastSubmissionId] = useState(null); // Track submission to avoid re-triggering modal
+  const [lastSubmissionId, setLastSubmissionId] = useState(null);
 
-  // Check if questions should be enabled based on timer state
-  const areQuestionsEnabled =
-    testIsGoingOn && isCountdownComplete && isTimerRunning;
+  // Check if questions should be enabled
+  const areQuestionsEnabled = standalone
+    ? testIsGoingOn && isCountdownComplete && isTimerRunning
+    : true;
 
-  // Reset submission state and fetch text on mount
   useEffect(() => {
-    dispatch(resetSubmission()); // Clear any previous submission
+    dispatch(resetSubmission());
     dispatch(getNextText());
   }, [dispatch]);
 
-  // Update answers array when questions change
   useEffect(() => {
     if (currentText?.questions) {
       setAnswers(Array(currentText.questions.length).fill(null));
     }
   }, [currentText]);
 
-  // Open results modal on successful submission, only for new submissions
   useEffect(() => {
     if (submission.success && submission.message !== lastSubmissionId) {
       setShowResult(true);
       setOpenResultModal(true);
-      setLastSubmissionId(submission.message); // Mark this submission as handled
+      setLastSubmissionId(submission.message);
     }
   }, [submission, lastSubmissionId]);
 
-  // Handle option selection (store the option letter, e.g., "D")
   const handleOptionChange = (questionIndex, selectedOption) => {
-    // Only allow changing answers if the test is active
     if (!areQuestionsEnabled) return;
 
     const optionLetter = selectedOption.split(".")[0];
@@ -81,7 +76,6 @@ const Reading = ({ showSubmitButton }) => {
     setAnswers(newAnswers);
   };
 
-  // Submit answers to the API
   const handleSubmit = () => {
     if (!currentText || !currentText.text_id || !currentText.questions) {
       return;
@@ -104,16 +98,17 @@ const Reading = ({ showSubmitButton }) => {
         time_spent: 120,
       })
     );
-    stopTest(); // Stop the timer when submitting
+
+    if (standalone) {
+      stopTest();
+    }
   };
 
-  // Close results modal without resetting state
   const handleCloseModal = () => {
     setOpenResultModal(false);
-    setShowResult(true); // Keep showResult true to allow reviewing answers
+    setShowResult(true);
   };
 
-  // Start a new test (reset state and fetch new text)
   const handleStartNewTest = () => {
     dispatch(resetSubmission());
     dispatch(getNextText());
@@ -123,7 +118,6 @@ const Reading = ({ showSubmitButton }) => {
     setLastSubmissionId(null);
   };
 
-  // Calculate correct and incorrect counts
   const correctCount = currentText?.questions
     ? currentText.questions.reduce((acc, question, idx) => {
         return acc + (answers[idx] === question.answer ? 1 : 0);
@@ -150,9 +144,11 @@ const Reading = ({ showSubmitButton }) => {
   return (
     <>
       <TestTitle
+        standalone={standalone}
         title={t("reading.heading")}
         subtitle={t("reading.subHeading")}
       />
+
       <Grid container spacing={5} mt={1}>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <Box style={{ border: "1px solid #2a8efe", borderRadius: "10px" }}>
@@ -160,68 +156,72 @@ const Reading = ({ showSubmitButton }) => {
           </Box>
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Typography mb={3} variant="body1">
-            This part consists of two passages, each followed by several related
-            questions. For each question,
-            <Typography variant="h6" mt={1}>
-              choose the most appropriate answer based on the passage.
-            </Typography>
-          </Typography>
-
-          <Typography variant="h2" style={{ marginBottom: "30px" }}>
-            Questions 1 to {currentText?.questions?.length}
-          </Typography>
-
-          {/* Conditionally render questions or a start message */}
-          {areQuestionsEnabled ? (
-            currentText?.questions?.map((item, index) => {
-              const transformedOptions = item.options.map((option) => ({
-                text: option,
-                isCorrect: option.startsWith(item.answer + "."),
-                explanation: option.startsWith(item.answer + ".")
-                  ? "This is the correct answer based on the passage."
-                  : undefined,
-              }));
-
-              return (
-                <MCQ
-                  key={item.question_id}
-                  question={item.question}
-                  options={transformedOptions}
-                  index={index}
-                  selectedOption={
-                    answers[index]
-                      ? item.options.find((opt) =>
-                          opt.startsWith(answers[index] + ".")
-                        )
-                      : null
-                  }
-                  handleOptionChange={handleOptionChange}
-                  showResult={showResult}
-                  disabled={!areQuestionsEnabled}
-                />
-              );
-            })
-          ) : (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: "200px",
-                border: "1px dashed #ccc",
-                borderRadius: "8px",
-                p: 3,
-                textAlign: "center",
-              }}
-            >
-              <Typography variant="h6" color="textSecondary">
-                {showResult
-                  ? "Test completed. Click 'New Test' to try again."
-                  : "Click 'New Test' to begin the reading test."}
+          {standalone && (
+            <>
+              <Typography mb={3} variant="body1">
+                This part consists of two passages, each followed by several
+                related questions. For each question,
+                <Typography variant="h6" mt={1}>
+                  choose the most appropriate answer based on the passage.
+                </Typography>
               </Typography>
-            </Box>
+
+              <Typography variant="h2" style={{ marginBottom: "30px" }}>
+                Questions 1 to {currentText?.questions?.length}
+              </Typography>
+            </>
           )}
+
+          {/* Always show questions if not standalone, otherwise follow timer rules */}
+          {areQuestionsEnabled
+            ? currentText?.questions?.map((item, index) => {
+                const transformedOptions = item.options.map((option) => ({
+                  text: option,
+                  isCorrect: option.startsWith(item.answer + "."),
+                  explanation: option.startsWith(item.answer + ".")
+                    ? "This is the correct answer based on the passage."
+                    : undefined,
+                }));
+
+                return (
+                  <MCQ
+                    key={item.question_id}
+                    question={item.question}
+                    options={transformedOptions}
+                    index={index}
+                    selectedOption={
+                      answers[index]
+                        ? item.options.find((opt) =>
+                            opt.startsWith(answers[index] + ".")
+                          )
+                        : null
+                    }
+                    handleOptionChange={handleOptionChange}
+                    showResult={showResult}
+                    disabled={!areQuestionsEnabled}
+                  />
+                );
+              })
+            : standalone && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    minHeight: "200px",
+                    border: "1px dashed #ccc",
+                    borderRadius: "8px",
+                    p: 3,
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography variant="h6" color="textSecondary">
+                    {showResult
+                      ? "Test completed. Click 'New Test' to try again."
+                      : "Click 'New Test' to begin the reading test."}
+                  </Typography>
+                </Box>
+              )}
 
           {/* Submit & New Test Buttons */}
           {showSubmitButton && (

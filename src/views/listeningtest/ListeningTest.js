@@ -20,13 +20,14 @@ import { getGrammarAudio } from "../../redux/features/listeningSlice";
 import { useTranslation } from "react-i18next";
 import { useTimer } from "../../context/TimerContext";
 
-const ListeningTest = ({ showSubmitButton }) => {
+const ListeningTest = ({ showSubmitButton, standalone = true }) => {
   const [openPopup, setOpenPopup] = useState(false);
 
   const dispatch = useDispatch();
 
-  const audioData = useSelector((state) => state.listening.audioData);
-  console.log(audioData + " i am her");
+  //const audioData = useSelector((state) => state.listening.audioData);
+  const audioData =
+    "https://file-examples.com/storage/fe1aa0c9d563ea1e4a1fd34/2017/11/file_example_MP3_700KB.mp3";
 
   useEffect(() => {
     dispatch(getGrammarAudio({ level: 1 }));
@@ -156,11 +157,13 @@ const ListeningTest = ({ showSubmitButton }) => {
 
   return (
     <>
-      <TestTitle
-        title={t("listening.heading")}
-        subtitle={t("listening.subHeading")}
-      />
-
+      {standalone && (
+        <TestTitle
+          standalone={standalone}
+          title={t("listening.heading")}
+          subtitle={t("listening.subHeading")}
+        />
+      )}
       <Box dir="ltr">
         <Grid container spacing={5} mt={1}>
           <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -174,7 +177,8 @@ const ListeningTest = ({ showSubmitButton }) => {
                 <img src={Speaker} alt="speaker" style={{ marginBottom: 16 }} />
                 <audio controls>
                   <source
-                    src={audioData?.question?.audio_url}
+                    //src={audioData?.question?.audio_url}
+                    src={audioData}
                     type="audio/mp3"
                   />
                   Your browser does not support the audio element.

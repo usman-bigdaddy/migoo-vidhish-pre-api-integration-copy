@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { useTimer } from "../../context/TimerContext";
 import api from "../../redux/api/axiosInstance";
 
-const Restatements = ({ showSubmitButton }) => {
+const Restatements = ({ showSubmitButton, standalone = true }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [questions_data, setQuestionsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,16 +31,23 @@ const Restatements = ({ showSubmitButton }) => {
 
   // Memoize the display state to prevent unnecessary re-renders
   const shouldShowQuestions = useMemo(() => {
+    // Always show questions if not standalone
+    if (!standalone) return true;
+    // For standalone, follow timer rules
     return testIsGoingOn && isTimerRunning;
-  }, [testIsGoingOn, isTimerRunning]);
+  }, [standalone, testIsGoingOn, isTimerRunning]);
 
   const shouldShowStartMessage = useMemo(() => {
+    // Never show start message if not standalone
+    if (!standalone) return false;
     return !testIsGoingOn;
-  }, [testIsGoingOn]);
+  }, [standalone, testIsGoingOn]);
 
   const shouldShowPauseMessage = useMemo(() => {
+    // Never show pause message if not standalone
+    if (!standalone) return false;
     return testIsGoingOn && !isTimerRunning;
-  }, [testIsGoingOn, isTimerRunning]);
+  }, [standalone, testIsGoingOn, isTimerRunning]);
 
   // Transform API data to match the expected format
   const transformApiData = (apiData) => {
@@ -84,7 +91,7 @@ const Restatements = ({ showSubmitButton }) => {
     const fetchQuestions = async () => {
       try {
         setLoading(true);
-        const response = await api.get("/api/restatements"); // Update this endpoint
+        const response = await api.get("/api/restatements");
 
         if (response.data.success) {
           const transformedData = transformApiData(response.data);
@@ -113,7 +120,9 @@ const Restatements = ({ showSubmitButton }) => {
   const calculateResults = () => {
     setShowResult(true);
     setOpenResultModal(true);
-    stopTest();
+    if (standalone) {
+      stopTest();
+    }
   };
 
   const handleCloseModal = () => {
@@ -176,24 +185,28 @@ const Restatements = ({ showSubmitButton }) => {
     <>
       <TestTitle
         title={t("restatements.heading")}
+        standalone={standalone}
         subtitle={t("restatements.subHeading")}
       />
-
       <Box dir="ltr">
         {shouldShowQuestions && (
           <>
-            <Typography mt={4} mb={3} variant="body1">
-              This part consists of several sentences, each followed by four
-              possible ways of restating the main idea of that sentence in
-              different words. For each question, choose the one restatement
-              <Typography variant="h6" mt={1}>
-                which best expresses the meaning of the original sentence.
+            {standalone && (
+              <Typography mt={4} mb={3} variant="body1">
+                This part consists of several sentences, each followed by four
+                possible ways of restating the main idea of that sentence in
+                different words. For each question, choose the one restatement
+                <Typography variant="h6" mt={1}>
+                  which best expresses the meaning of the original sentence.
+                </Typography>
               </Typography>
-            </Typography>
+            )}
 
-            <Typography variant="h2" style={{ marginBottom: "30px" }}>
-              Questions 1 to {questions_data.length}
-            </Typography>
+            {standalone && (
+              <Typography variant="h2" style={{ marginBottom: "30px" }}>
+                Questions 1 to {questions_data.length}
+              </Typography>
+            )}
 
             {questions_data.map((item, index) => (
               <MCQ

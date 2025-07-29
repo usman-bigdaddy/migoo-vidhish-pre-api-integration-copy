@@ -23,7 +23,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useTimer } from "../../context/TimerContext";
 
-const SentenceCompletion = ({ showSubmitButton }) => {
+const SentenceCompletion = ({ showSubmitButton, standalone = true }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [answers, setAnswers] = useState([]);
   const [showResult, setShowResult] = useState(false);
@@ -38,20 +38,29 @@ const SentenceCompletion = ({ showSubmitButton }) => {
 
   // Memoize the display state to prevent unnecessary re-renders
   const shouldShowQuestions = useMemo(() => {
+    // Always show questions if not standalone
+    if (!standalone) return true;
+    // For standalone, follow timer rules
     return testIsGoingOn && isTimerRunning && isCountdownComplete;
-  }, [testIsGoingOn, isTimerRunning, isCountdownComplete]);
+  }, [standalone, testIsGoingOn, isTimerRunning, isCountdownComplete]);
 
   const shouldShowStartMessage = useMemo(() => {
+    // Never show start message if not standalone
+    if (!standalone) return false;
     return !testIsGoingOn;
-  }, [testIsGoingOn]);
+  }, [standalone, testIsGoingOn]);
 
   const shouldShowPauseMessage = useMemo(() => {
+    // Never show pause message if not standalone
+    if (!standalone) return false;
     return testIsGoingOn && !isTimerRunning;
-  }, [testIsGoingOn, isTimerRunning]);
+  }, [standalone, testIsGoingOn, isTimerRunning]);
 
   const shouldShowCountdownMessage = useMemo(() => {
+    // Never show countdown message if not standalone
+    if (!standalone) return false;
     return testIsGoingOn && !isCountdownComplete;
-  }, [testIsGoingOn, isCountdownComplete]);
+  }, [standalone, testIsGoingOn, isCountdownComplete]);
 
   // Initialize answers array when quizData is loaded
   useEffect(() => {
@@ -86,7 +95,12 @@ const SentenceCompletion = ({ showSubmitButton }) => {
 
   const calculateResults = async () => {
     if (!quizData?.session_id) return;
-    stopTest();
+
+    // Only stop test if standalone
+    if (standalone) {
+      stopTest();
+    }
+
     // Submit each answer
     for (let i = 0; i < answers.length; i++) {
       if (answers[i]) {
@@ -164,6 +178,7 @@ const SentenceCompletion = ({ showSubmitButton }) => {
   return (
     <>
       <TestTitle
+        standalone={standalone}
         title={t("sentenceCompletion.heading")}
         subtitle={t("sentenceCompletion.subHeading")}
       />
@@ -171,15 +186,17 @@ const SentenceCompletion = ({ showSubmitButton }) => {
       <Box dir="ltr">
         {shouldShowQuestions && (
           <>
-            <Typography mt={4} mb={3} variant="body1">
-              This part consists of sentences with a word or words missing in
-              each. For each question, choose the answer
-              <Typography variant="h6" mt={1}>
-                which best completes the sentence.
+            {standalone && (
+              <Typography mt={4} mb={3} variant="body1">
+                This part consists of sentences with a word or words missing in
+                each. For each question, choose the answer
+                <Typography variant="h6" mt={1}>
+                  which best completes the sentence.
+                </Typography>
               </Typography>
-            </Typography>
+            )}
 
-            {quizData && (
+            {standalone && quizData && (
               <Typography variant="h2" style={{ marginBottom: "30px" }}>
                 Questions 1 to {quizData.total_questions}
               </Typography>
